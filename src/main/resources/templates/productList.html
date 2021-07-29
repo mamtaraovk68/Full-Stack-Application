@@ -1,0 +1,53 @@
+<html> 
+<head>
+
+
+
+<title> Product list </title>
+
+ <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    
+    </head>
+<body>
+
+
+<div>
+        <h1>Product List</h1>
+    </div>
+  
+    <div>
+<a th:href="@{/showNewProductForm}" class="btn btn-primary btn-sm mb-3"> Add Product </a>
+        <table class="table table-striped table-bordered">
+                <tr>
+                    <th>product_Id</th>
+                    <th>product_name</th>
+                    <th>product_description</th>
+                    <th>product_category</th>
+                    <th>unit</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product: ${productList}">
+                    <td th:text="${product.productId}">product_id</td>
+                    <td th:text="${product.productName}">product_name</td>
+                    <td th:text="${product.productDesc}">product_description</td>
+                    <td th:text="${product.productCategory}">product_category</td>
+                    <td th:text="${product.unit}">unit</td>
+                     <td> <a th:href="@{/showFormForUpdate/{productId}(productId=${product.productId})}" class="btn btn-primary">Update</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+</body>
+
+</html>
+
