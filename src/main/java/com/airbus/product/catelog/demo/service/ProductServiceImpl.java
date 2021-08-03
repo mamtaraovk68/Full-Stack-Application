@@ -52,9 +52,7 @@ public class ProductServiceImpl implements ProductService {
 	 * @throws TokenExpiresException
 	 *
 	 */
-	public List<ProductDTO> viewAllProduct(String token) throws UserNotFoundException, TokenExpiresException {
-		//validateUser(token);
-		LOGGER.info("Start Listing");
+	public List<ProductDTO> viewAllProduct() throws UserNotFoundException, TokenExpiresException {
 		List<Product> productList=  productRepository.findAll();
 		return productList.stream().map(list -> (modelMapper.map(list, ProductDTO.class))).collect(Collectors.toList());	
 	}

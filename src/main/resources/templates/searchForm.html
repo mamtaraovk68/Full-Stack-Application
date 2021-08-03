@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title></title>
+</head>
+<body>
+<div class="container">
+
+    <h2>Search Product by Category</h2>
+    <form th:action="@{/search}" th:object="${product}" method="get">
+        <input type="text" name="search" id="search" th:value="${search}"/>
+        <input type="submit" value="Search"/>
+        <div th:if="${not #lists.isEmpty(search)}">
+            <h2>Product List</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>product_Id</th>
+                    <th>product_name</th>
+                    <th>product_description</th>
+                    <th>product_category</th>
+                    <th>unit</th>
+                    <th>Action</th>
+                </tr>
+                <tr th:each="product: ${search}">
+                   <td th:text="${product.productId}">product_id</td>
+                    <td th:text="${product.productName}">product_name</td>
+                    <td th:text="${product.productDesc}">product_description</td>
+                    <td th:text="${product.productCategory}">product_category</td>
+                    <td th:text="${product.unit}">unit</td>
+                </tr>
+            </table>
+        </div>
+        <a th:href="@{/getAll}"> Back to Product List</a>
+    </form>
+</div>
+</body>
+</html>
+

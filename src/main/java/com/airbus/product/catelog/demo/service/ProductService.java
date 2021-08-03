@@ -17,7 +17,7 @@ public interface ProductService {
 	 * @throws UserNotFoundException 
 	 * @throws TokenExpiresException 
 	 */
-	public List<ProductDTO> viewAllProduct(String token) throws UserNotFoundException, TokenExpiresException;
+	public List<ProductDTO> viewAllProduct() throws UserNotFoundException, TokenExpiresException;
 	
 	/**
 	 * @param category

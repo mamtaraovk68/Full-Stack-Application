@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.airbus.product.catelog.demo.exceptions.ProductManipulationException;
 import com.airbus.product.catelog.demo.exceptions.TokenExpiresException;
@@ -51,16 +53,13 @@ public class ProductCatalogController {
 	 */
 	@GetMapping("/getAll")
 	public String viewAllProducts(Model model,HttpServletRequest request) throws UserNotFoundException, TokenExpiresException{
-		System.out.println("token" + model.getAttribute("token"));
-		String token =(String) model.getAttribute("token");
-		List<ProductDTO> productList =  productService.viewAllProduct(token);
+		List<ProductDTO> productList =  productService.viewAllProduct();
 		model.addAttribute("productList", productList);
 		return "productList";
 		
 	}
 	
-	
-	
+
 	/**'Method to list all the product with a particular category
 	 * @param category
 	 * @param request
@@ -102,21 +101,21 @@ public class ProductCatalogController {
 	 * @throws TokenExpiresException 
 	 * @throws UserNotFoundException 
 	 */
-	@PostMapping("/update")
-	public String updateProduct( ProductDTO product,  HttpServletRequest request) throws UserNotFoundException, TokenExpiresException, ProductManipulationException {
-		System.out.println("update started");
-		productService.updateProduct(product, request.getHeader("AUTH_HEADER_TOKEN"));
+	@PostMapping("/update/{productId}")
+	public RedirectView updateProduct(@PathVariable("productId") String productId, ProductDTO product,  HttpServletRequest request,RedirectAttributes redirectAttributes) throws UserNotFoundException, TokenExpiresException, ProductManipulationException {
 		
-		return "redirect:getAll";
+		productService.updateProduct(product, request.getHeader("AUTH_HEADER_TOKEN"));
+		RedirectView redirectView=new RedirectView("/getAll",true);
+        redirectAttributes.addFlashAttribute("userMessage","product updated!!!");
+        return redirectView;
+	
 	}
 
 	
 	
 	 @GetMapping("/showFormForUpdate/{productId}")
 	    public String showFormForUpdate(@PathVariable("productId") String productId, Model model) {
-   System.out.println("Controller productid "+ productId);
 	        ProductDTO product = productService.viewProductById(productId);
-	        System.out.println("List product "+ product.getProductName());
 	        // set product as a model attribute to pre-populate the form
 	        model.addAttribute("product", product);
 	        return "update_product";
@@ -129,4 +128,6 @@ public class ProductCatalogController {
 	        model.addAttribute("productDTO", productDTO);
 	        return "new_product";
 	    }
+	
+	
 }

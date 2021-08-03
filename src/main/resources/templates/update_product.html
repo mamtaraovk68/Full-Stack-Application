@@ -14,7 +14,7 @@
         <hr>
         <h2>Update product</h2>
 
-        <form action="#" th:action="@{/update}" th:object="${product}" method="POST">
+        <form action="#" th:action="@{'/update/'+${product.productId}}" th:object="${product}" method="POST">
 
            <!-- Add hidden form field to handle update -->
           
@@ -35,7 +35,7 @@
 
         <hr>
 
-        <a th:href="@{/getAll}"> Back to Employee List</a>
+       <a th:href="@{/getAll}"> Back to Product List</a>
     </div>
 </body>
 </html>
