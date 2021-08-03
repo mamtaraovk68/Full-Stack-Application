@@ -5,10 +5,14 @@ import org.springframework.context.annotation.Configuration;
 
 import com.google.common.base.Predicate;
 
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.ApiKeyVehicle;
+import springfox.documentation.swagger.web.SecurityConfiguration;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
@@ -23,6 +27,9 @@ public class SwaggerConfiguraton {
           .paths(PathSelectors.any())                          
           .build();                                           
     }
-	
+	 private ApiInfo apiInfo() {
+	        return new ApiInfoBuilder().title("Airbus Product Inventory").description("Full Stack app using Spring Boot ANd MongoDB ")
+	                .contact("mamtarao9395@gmail.com").version("1.0").build();
+	    }
 
 }
